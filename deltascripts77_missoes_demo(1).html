@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DELTA SCRIPTS 77</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#080811;color:#f5f3ff;font-family:Arial,sans-serif;background-image:radial-gradient(ellipse at 50% 0%,#29134b 0,transparent 55%)}
+main{width:min(720px,92%);margin:auto;padding:32px 0 55px}
+header{text-align:center;margin-bottom:30px}
+.avatar-wrap{width:126px;height:126px;margin:0 auto 17px;padding:5px;border-radius:50%;background:linear-gradient(135deg,#d8a7ff,#7c3aed,#22d3ee);box-shadow:0 0 28px #a855f766}
+.avatar{width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:50%;background:#171326;border:3px solid #0b0914;color:#d9c9ff;font-size:30px;font-weight:900}
+.avatar img{width:100%;height:100%;object-fit:cover}
+h1{margin:0;font-size:clamp(30px,7vw,46px);letter-spacing:2px;text-shadow:0 0 18px #9b5cff}
+.sakura-layer{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.petal{position:absolute;top:-35px;color:#ffc5df;opacity:.85;text-shadow:0 0 8px #ff9acb;animation:petal-fall linear infinite}
+@keyframes petal-fall{0%{transform:translate3d(0,-5vh,0) rotate(0deg);opacity:0}10%{opacity:.9}50%{transform:translate3d(55px,50vh,0) rotate(190deg)}100%{transform:translate3d(-35px,110vh,0) rotate(390deg);opacity:0}}
+main{position:relative;z-index:1}
+header p{color:#b9b2d0;margin:9px 0 18px}
+.youtube{display:inline-block;background:#fff;color:#17121f;padding:12px 20px;border-radius:10px;text-decoration:none;font-weight:bold}
+h2{font-size:17px;margin:28px 0 13px;color:#d9c9ff}
+.executor-list{display:flex;flex-direction:column;gap:12px}
+.executor{width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;padding:18px;border-radius:13px;border:1px solid #4a3477;background:linear-gradient(110deg,#211638,#121222);color:white;font-size:17px;font-weight:800;cursor:pointer}
+.executor:hover,.executor.active{border-color:#39d7f2;box-shadow:0 0 18px #8b5cf633}
+.executor span:last-child{font-size:12px;color:#bca4ff}
+.missions{display:none;margin-top:18px;padding:20px;border:1px solid #49346f;border-radius:15px;background:#11111f}
+.missions.show{display:block}
+.missions h3{margin:0 0 7px}
+.description{font-size:13px;color:#aaa5c5;line-height:1.5;margin:0 0 16px}
+.mission-button{display:flex;align-items:center;justify-content:space-between;width:100%;padding:15px;margin:10px 0;border:1px solid #40345e;border-radius:11px;background:#19162a;color:white;text-decoration:none;font-weight:800}
+.mission-button:hover{border-color:#22d3ee;background:#211b36}
+.mission-button small{font-size:11px;color:#bba6ff;font-weight:normal}
+.finish{width:100%;padding:14px;margin-top:12px;border:0;border-radius:11px;background:linear-gradient(90deg,#7138d3,#087f9c);color:white;font-weight:900;cursor:pointer;opacity:.45}
+.finish.ready{opacity:1}
+.status{font-size:12px;color:#aaa5c5;text-align:center;min-height:18px;margin-top:10px}
+footer{text-align:center;color:#77718b;font-size:12px;margin-top:30px}
+</style>
+</head>
+<body>
+<main>
+<div class="sakura-layer" id="sakuraLayer" aria-hidden="true"></div>
+<header>
+<div class="avatar-wrap"><div class="avatar" id="channelAvatar">
+<img src="https://deltaexecutors.com.br/wp-content/uploads/2025/10/Delta-Executor-9.webp"
+     alt="Logo Delta Executor"
+     onerror="this.style.display='none'; this.parentElement.textContent='DS';">
+</div></div>
+<h1>DELTA SCRIPTS 77</h1>
+<p>Selecione um executor para ver as missões</p>
+<a class="youtube" href="https://www.youtube.com/@DeltaScripts_ofc" target="_blank" rel="noopener">▶ MEU CANAL NO YOUTUBE</a>
+</header>
+<h2>EXECUTORES</h2>
+<section class="executor-list">
+<button class="executor" onclick="openMissions(1,this)">EXECUTOR 1 <span>VER MISSÕES ↓</span></button>
+<button class="executor" onclick="openMissions(2,this)">EXECUTOR 2 <span>VER MISSÕES ↓</span></button>
+<button class="executor" onclick="openMissions(3,this)">EXECUTOR 3 <span>VER MISSÕES ↓</span></button>
+</section>
+
+<section class="missions" id="missions">
+<h3 id="missionTitle">MISSÕES</h3>
+<p class="description">Abra cada missão. Ao voltar para esta página, ela fará uma contagem de 5 segundos e marcará aquela etapa como concluída. É uma demonstração visual: o site não consegue confirmar diretamente curtidas, comentários ou inscrições no YouTube.</p>
+<a class="mission-button" id="likeLink" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener" onclick="startMission('like')">👍 DAR LIKE <small id="likeState">ABRIR VÍDEO ↗</small></a>
+<a class="mission-button" id="commentLink" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener" onclick="startMission('comment')">💬 COMENTAR NO VÍDEO <small id="commentState">ABRIR VÍDEO ↗</small></a>
+<a class="mission-button" id="subscribeLink" href="https://www.youtube.com/@DeltaScripts_ofc" target="_blank" rel="noopener" onclick="startMission('subscribe')">🔔 INSCREVER-SE NO CANAL <small id="subscribeState">ABRIR CANAL ↗</small></a>
+<button class="finish" id="finishBtn" disabled onclick="finishMissions()">CONCLUIR MISSÕES</button>
+<div class="status" id="status">Abra os três links para liberar o botão.</div>
+</section>
+<footer>DELTA SCRIPTS 77</footer>
+</main>
+<script>
+// Quando a foto do canal for enviada, substitua o conteúdo de #channelAvatar por uma imagem.
+const sakuraLayer=document.getElementById('sakuraLayer');
+for(let i=0;i<22;i++){
+ const petal=document.createElement('span');
+ petal.className='petal';
+ petal.textContent='🌸';
+ petal.style.left=(Math.random()*100)+'%';
+ petal.style.animationDuration=(9+Math.random()*12)+'s';
+ petal.style.animationDelay=(-Math.random()*18)+'s';
+ petal.style.fontSize=(12+Math.random()*13)+'px';
+ sakuraLayer.appendChild(petal);
+}
+let selectedExecutor=0;
+let completed={like:false,comment:false,subscribe:false};
+let pendingMission=null;
+let verifying=false;
+const finishBtn=document.getElementById('finishBtn');
+const statusEl=document.getElementById('status');
+
+function openMissions(id,button){
+ selectedExecutor=id;
+ completed={like:false,comment:false,subscribe:false};
+ pendingMission=null;
+ verifying=false;
+ document.querySelectorAll('.executor').forEach(b=>b.classList.remove('active'));
+ button.classList.add('active');
+ document.getElementById('missionTitle').textContent='MISSÕES — EXECUTOR '+id;
+ document.getElementById('missions').classList.add('show');
+ ['like','comment','subscribe'].forEach(resetMissionLabel);
+ updateFinish();
+ document.getElementById('missions').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function resetMissionLabel(name){
+ const label=document.getElementById(name+'State');
+ if(label) label.textContent=(name==='subscribe'?'ABRIR CANAL ↗':'ABRIR VÍDEO ↗');
+}
+function startMission(name){
+ if(completed[name] || verifying) return;
+ pendingMission=name;
+ statusEl.textContent='Quando voltar do YouTube, a verificação de 5 segundos começará.';
+}
+function beginVerification(){
+ if(!pendingMission || verifying || completed[pendingMission]) return;
+ verifying=true;
+ const name=pendingMission;
+ let seconds=5;
+ const label=document.getElementById(name+'State');
+ statusEl.textContent='Verificando '+seconds+' segundos...';
+ if(label) label.textContent='VERIFICANDO 5s...';
+ const countdown=setInterval(()=>{
+   seconds--;
+   if(label) label.textContent='VERIFICANDO '+seconds+'s...';
+   statusEl.textContent='Verificando '+seconds+' segundos...';
+   if(seconds<=0){
+     clearInterval(countdown);
+     completed[name]=true;
+     pendingMission=null;
+     verifying=false;
+     if(label) label.textContent='✓ CONCLUÍDA';
+     updateFinish();
+   }
+ },1000);
+}
+window.addEventListener('focus',beginVerification);
+document.addEventListener('visibilitychange',()=>{
+ if(document.visibilityState==='visible') beginVerification();
+});
+function updateFinish(){
+ const ready=Object.values(completed).every(Boolean);
+ finishBtn.disabled=!ready;
+ finishBtn.classList.toggle('ready',ready);
+ statusEl.textContent=ready?'As três etapas foram concluídas nesta demonstração.':'Abra cada missão e volte para iniciar a verificação de 5 segundos.';
+}
+function finishMissions(){
+ if(!selectedExecutor||!Object.values(completed).every(Boolean))return;
+ statusEl.textContent='Missões concluídas nesta demonstração!';
+}
+</script>
+</body>
+</html>
